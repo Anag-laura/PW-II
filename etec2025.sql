@@ -1,0 +1,13 @@
+CREATE DATABASE if NOT EXISTS etec2025;
+
+USE etec2025;
+
+CREATE TABLE if NOT EXISTS Usuario(
+	idUsuario INT NOT NULL,
+	nome VARCHAR(60) NOT NULL,
+	email VARCHAR(120) NOT NULL,
+	senha VARCHAR(40) NOT NULL,
+	ativo CHAR(1) NOT NULL DEFAULT 'S',
+	PRIMARY KEY(idUsuario)	);
+	
+	
