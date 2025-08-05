@@ -1,20 +1,30 @@
 <?php
-    // Incluir banco de dados
-    include_once "..\Modelo\usuarioInserir.php";
-    include_once '..\Persist\usuarioDAO.php';
+// Incluir banco de dados
+include_once "../Modelo/usuarioInserir.php";
+include_once "../Persist/usuarioDAO.php";
 
-    // Declaração de Variaveis
-    $n = $_POST['nome'];
-    $s = $_POST['senha'];
-    $e = $_POST['email'];
+// Verificar se os dados foram enviados via POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Filtrar e validar os dados recebidos
+    $n = isset($_POST['nome']) ? trim($_POST['nome']) : null;
+    $s = isset($_POST['senha']) ? trim($_POST['senha']) : null;
+    $e = isset($_POST['email']) ? trim($_POST['email']) : null;
 
-    //Instanciar (criar) um objeto da classe Usuario
-    $usu = new Usuario(1, $n, $e, $s, 'S');
-    $usuDAO = new UsuarioDAO();
-    $usuDAO->Inserir($usu);
+    // Verifica se nenhum campo está vazio
+    if ($n && $s && $e) {
+        // Cria o objeto Usuario
+        $usu = new Usuario(1, $n, $e, $s, 'S');
 
-    /*Conferir se o objeto foi criado corretamente
-    echo "var_dump()";
-    var_dump($usu);
-    */
+        // Cria o DAO e insere o usuário
+        $usuDAO = new UsuarioDAO();
+        $usuDAO->Inserir($usu);
+
+        // Redireciona ou mostra mensagem de sucesso
+        echo "Usuário inserido com sucesso!";
+    } else {
+        echo "Erro: Todos os campos devem ser preenchidos.";
+    }
+} else {
+    echo "Acesso inválido.";
+}
 ?>
